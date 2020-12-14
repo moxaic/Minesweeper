@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="main.css" rel="stylesheet" />
+    <title>Minesweeper</title>
+  </head>
+  <body>
+    <div class="containers_container">
+      <div class="container">
+        <div class="header">
+          <h1 class="title">MINESWEEPER</h1>
+          <div id="settings" class="button" onclick="openSettings()">
+            Settings
+          </div>
+        </div>
+        <div class="game_info">
+          <div class="time info">
+            Time :
+            <div id="time" class="value"></div>
+          </div>
+          <div class="flags info">
+            Flags left :
+            <div id="flag-count" class="value"></div>
+          </div>
+          <div class="hint info" onclick="openHint()">
+            Help Me
+            <div id="animate-div" class="hover_text">
+              Click here if you need help
+            </div>
+          </div>
+        </div>
+        <div class="game_container">
+          <div class="chalbc">
+            <div class="game_content"></div>
+          </div>
+        </div>
+        <div class="modal_background">
+          <div id="settings-modal" class="modal">
+            <div class="close_modal" onclick="closeSettings()">❌</div>
+            <form class="settings">
+              <label>
+                Rows :
+                <input
+                  id="rows"
+                  class="input"
+                  type="number"
+                  min="7"
+                  max="20"
+                  value="10"
+                />
+              </label>
+              <label>
+                Columns :
+                <input
+                  id="columns"
+                  class="input"
+                  type="number"
+                  min="7"
+                  max="20"
+                  value="10"
+                />
+              </label>
+              <div class="btn" onclick="applyChanges();">Apply Changes</div>
+            </form>
+          </div>
+        </div>
+        <div class="result_background">
+          <div class="result">
+            <h1 id="status"></h1>
+            <h3 id="stats"></h3>
+            <div class="result-button" onclick="applyChanges(false)">
+              Play again
+            </div>
+          </div>
+        </div>
+        <div id="hint-div" class="hint_box">
+          <div id="movable-div" class="draggable_div">Drag from here</div>
+          <div class="close_hint" onclick="closeHint()">❌</div>
+          <p id="correct-flags" class="hint_text"></p>
+        </div>
+      </div>
+    </div>
+    <div class="footer">Aditya Srivastava</div>
+
+    <script src="index.js" charset="utf-8"></script>
+  </body>
+</html>
