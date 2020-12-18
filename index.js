@@ -285,7 +285,7 @@ window.onresize = handleResize;
 function handleResize() {
   if (
     document.querySelector(".game_content").offsetHeight <=
-    document.querySelector(".chalbc").offsetHeight
+    document.querySelector(".game_box").offsetHeight
   ) {
     document.querySelector(".game_content").classList.add("center");
   } else {

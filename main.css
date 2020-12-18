@@ -98,7 +98,7 @@ body::-webkit-scrollbar {
   flex: auto;
   position: relative;
 }
-.chalbc {
+.game_box {
   bottom: 0;
   left: 0;
   overflow: auto;
@@ -225,11 +225,6 @@ body::-webkit-scrollbar {
   font-size: 18px;
   margin: 65px auto 10px;
 }
-.footer {
-  background-color: rgb(11, 11, 11);
-  height: 200px;
-  padding: 50px 250px;
-}
 .hover_text.animate {
   -webkit-animation: fadeIn 1s;
   animation: fadeIn 1s;
@@ -252,20 +247,20 @@ body::-webkit-scrollbar {
   }
 }
 
-.chalbc::-webkit-scrollbar {
+.game_box::-webkit-scrollbar {
   height: 8px;
   width: 8px;
 }
 
-.chalbc::-webkit-scrollbar-track {
+.game_box::-webkit-scrollbar-track {
   background: rgb(39, 39, 39);
 }
 
-.chalbc::-webkit-scrollbar-thumb {
+.game_box::-webkit-scrollbar-thumb {
   background: #888;
 }
 
-.chalbc::-webkit-scrollbar-thumb:hover {
+.game_box::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
 
