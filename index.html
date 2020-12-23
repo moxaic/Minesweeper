@@ -7,83 +7,80 @@
     <title>Minesweeper</title>
   </head>
   <body>
-    <div class="containers_container">
+    <div class="outer-container">
       <div class="container">
         <div class="header">
           <h1 class="title">MINESWEEPER</h1>
-          <div id="settings" class="button" onclick="openSettings()">
-            Settings
-          </div>
+          <div id="settings-btn" class="button">Settings</div>
         </div>
-        <div class="game_info">
-          <div class="time info">
+        <div class="game-info">
+          <div>
             Time :
             <div id="time" class="value"></div>
           </div>
-          <div class="flags info">
+          <div>
             Flags left :
             <div id="flag-count" class="value"></div>
           </div>
-          <div class="hint info" onclick="openHint()">
+          <div id="open-hint" class="button">
             Help Me
-            <div id="animate-div" class="hover_text">
+            <div id="animate-div" class="hover-text">
               Click here if you need help
             </div>
           </div>
         </div>
-        <div class="game_container">
-          <div class="chalbc">
-            <div class="game_content"></div>
+        <div class="game-container">
+          <div class="game-box">
+            <div class="game-content"></div>
           </div>
-        </div>
-        <div class="modal_background">
-          <div id="settings-modal" class="modal">
-            <div class="close_modal" onclick="closeSettings()">❌</div>
-            <form class="settings">
-              <label>
-                Rows :
-                <input
-                  id="rows"
-                  class="input"
-                  type="number"
-                  min="7"
-                  max="20"
-                  value="10"
-                />
-              </label>
-              <label>
-                Columns :
-                <input
-                  id="columns"
-                  class="input"
-                  type="number"
-                  min="7"
-                  max="20"
-                  value="10"
-                />
-              </label>
-              <div class="btn" onclick="applyChanges();">Apply Changes</div>
-            </form>
-          </div>
-        </div>
-        <div class="result_background">
-          <div class="result">
-            <h1 id="status"></h1>
-            <h3 id="stats"></h3>
-            <div class="result-button" onclick="applyChanges(false)">
-              Play again
-            </div>
-          </div>
-        </div>
-        <div id="hint-div" class="hint_box">
-          <div id="movable-div" class="draggable_div">Drag from here</div>
-          <div class="close_hint" onclick="closeHint()">❌</div>
-          <p id="correct-flags" class="hint_text"></p>
         </div>
       </div>
+      <div class="modal-bg">
+        <div id="settings" class="modal">
+          <div id="close-settings" class="button">❌</div>
+          <form class="settings-form">
+            <label>
+              Rows :
+              <input
+                id="rows"
+                class="input"
+                type="number"
+                min="7"
+                max="20"
+                value="10"
+              />
+            </label>
+            <label>
+              Columns :
+              <input
+                id="cols"
+                class="input"
+                type="number"
+                min="7"
+                max="20"
+                value="10"
+              />
+            </label>
+            <div id="apply-changes" class="button">Apply Changes</div>
+          </form>
+        </div>
+        <div id="result" class="modal">
+          <div class="performance">
+            <h1 id="end-result"></h1>
+            <h3 id="time-taken"></h3>
+            <div id="restart" class="button">Play again</div>
+          </div>
+        </div>
+      </div>
+      <div id="hint-div" class="hint-box">
+        <div id="movable-div" class="draggable-div">Drag from here</div>
+        <div id="close-hint" class="close-hint">❌</div>
+        <p id="correct-flags" class="hint-text"></p>
+      </div>
     </div>
-    <div class="footer">Aditya Srivastava</div>
-
+    <div class="footer">
+      <h3>Yay! You found me.</h3>
+    </div>
     <script src="index.js" charset="utf-8"></script>
   </body>
 </html>

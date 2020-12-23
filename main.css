@@ -2,19 +2,23 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  text-align: center;
 }
+
 html,
 body {
+  background-color: rgb(19, 19, 19);
   color: white;
   height: 100%;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
 body::-webkit-scrollbar {
   display: none;
 }
-.containers_container {
-  background-color: rgb(19, 19, 19);
+
+.outer-container {
   display: flex;
   height: 100%;
   justify-content: center;
@@ -26,79 +30,104 @@ body::-webkit-scrollbar {
   padding: 20px;
   width: 920px;
 }
+
 .header {
-  display: flex;
-  flex: content;
   margin-bottom: 20px;
   position: relative;
 }
+
 .title {
-  flex: auto;
-  margin-right: 20px;
+  padding: auto 5px;
   text-align: center;
 }
 
 .button {
-  align-self: flex-end;
+  border: solid rgb(39, 39, 39);
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+.button:hover {
+  background-color: rgb(39, 39, 39);
+  border-color: rgb(39, 39, 39);
+  border-radius: 4px;
+}
+
+.header > .button {
   border: solid rgb(19, 19, 19);
   border-bottom: solid white;
-  cursor: pointer;
+  bottom: 0;
   display: inline-block;
-  flex: content;
-  padding: 5px 10px;
+  position: absolute;
+  right: 0;
   z-index: 1;
 }
-.button:hover,
-.active_button {
+
+.header > .button:hover,
+.active.button {
+  background-color: rgb(19, 19, 19);
   border: solid white;
   border-bottom: solid rgb(39, 39, 39);
   border-radius: 4px 4px 0 0;
 }
-.game_info {
+
+.game-info {
+  align-items: center;
+  display: flex;
   flex: content;
+  justify-content: space-between;
   margin-bottom: 20px;
   position: relative;
 }
-.flags {
-  left: 50%;
-  position: absolute;
-  top: 0;
-  transform: translateX(-50%);
-}
-.hint {
-  background-color: rgb(19, 19, 19);
-  border: solid 2px rgb(39, 39, 39);
-  cursor: pointer;
-  padding: 5px 10px;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-.hint:hover {
-  background-color: rgb(39, 39, 39);
-  border-radius: 4px;
-}
-.hover_text {
-  border: solid rgb(39, 39, 39) 3px;
-  border-radius: 4px;
-  cursor: initial;
-  display: none;
-  padding: 5px 10px;
-  position: absolute;
-  right: 90px;
-  top: -3px;
-  width: 200px;
-}
+
 .value {
   border-bottom: solid rgb(39, 39, 39);
   display: inline-block;
   padding: 5px;
 }
-.game_container {
+
+.hover-text {
+  background-color: rgb(19, 19, 19);
+  border: solid rgb(39, 39, 39) 3px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: none;
+  padding: 5px 10px;
+  position: absolute;
+  right: 90px;
+  top: 0;
+  width: 200px;
+  z-index: 3;
+}
+
+.hover-text::after {
+  border-color: transparent transparent transparent rgb(39, 39, 39);
+  border-style: solid;
+  border-width: 5px;
+  content: "";
+  margin-top: -5px;
+  position: absolute;
+  top: 50%;
+  right: -13px;
+}
+
+.hover-text.animate {
+  -webkit-animation: lifecycle 5s;
+  animation: lifecycle 5s;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.hover-text.animate:hover {
+  opacity: 1;
+}
+
+.game-container {
   flex: auto;
   position: relative;
 }
-.chalbc {
+
+.game-box {
   bottom: 0;
   left: 0;
   overflow: auto;
@@ -106,87 +135,123 @@ body::-webkit-scrollbar {
   right: -8px;
   top: 0;
 }
-.game_content {
+
+.game-box::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+.game-box::-webkit-scrollbar-track {
+  background: rgb(39, 39, 39);
+}
+
+.game-box::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+.game-box::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.game-box::-webkit-scrollbar-corner {
+  background: #888;
+}
+
+.game-content {
   display: flex;
   flex-wrap: wrap;
   margin: auto;
 }
+
+.game-content.center {
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .mine {
   background-color: rgb(168, 168, 168);
   color: black;
+  cursor: default;
   height: 40px;
   line-height: 40px;
   margin: 2px;
-  text-align: center;
   width: 40px;
 }
-.mine:hover,
+
+.mine:not(.bomb):hover,
 .checked {
   background-color: rgb(224, 224, 224);
 }
-.bomb,
-.bomb:hover {
+
+.bomb {
   background-color: rgb(231, 39, 39);
 }
-.modal_background {
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: none;
-  height: 100%;
-  justify-content: center;
-  left: 0;
-  position: fixed;
-  top: 0;
-  width: 100%;
+
+.footer {
+  background-color: rgb(11, 11, 11);
+  padding: 50px 250px;
 }
+
+.modal-bg,
 .modal {
   align-items: center;
+  display: none;
+  justify-content: center;
+}
+
+.modal-bg {
+  background-color: rgba(0, 0, 0, 0.4);
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+
+.heavy-bg {
+  z-index: 10;
+}
+
+.modal {
   background-color: rgb(19, 19, 19);
   border: solid rgb(39, 39, 39);
-  color: white;
-  display: none;
   height: 350px;
-  justify-content: center;
   position: relative;
   width: 300px;
   z-index: 1;
 }
-.close_modal {
-  border: solid rgb(39, 39, 39);
-  cursor: pointer;
+
+.modal > .button:first-child {
   padding: 6px;
   position: absolute;
   right: 20px;
   top: 20px;
 }
-.close_modal:hover {
-  background-color: rgb(39, 39, 39);
-  border-radius: 4px;
-}
-.settings {
+
+.settings-form {
   padding: 30px;
-  text-align: center;
 }
-.settings > label {
+
+.settings-form > label {
   display: block;
   margin: 0 auto 30px;
   padding: 10px;
 }
-.settings > div.btn {
-  background-color: rgb(19, 19, 19);
-  border: solid rgb(39, 39, 39);
-  color: white;
-  padding: 5px 10px;
+
+.performance > * {
+  margin: 50px auto;
 }
-.settings > div.btn:hover {
-  background-color: rgb(39, 39, 39);
-  border-radius: 4px;
+
+.modal .button:last-child {
+  width: 150px;
 }
-.hint_box {
+
+.hint-box {
   background-color: rgb(26, 26, 26);
   border: 1px solid #d3d3d3;
   box-shadow: 0 0 8px 1px rgb(19, 19, 19);
-  color: white;
   display: none;
   left: 50vw;
   position: fixed;
@@ -195,13 +260,15 @@ body::-webkit-scrollbar {
   width: 200px;
   z-index: 2;
 }
-.draggable_div,
-.close_hint {
+
+.draggable-div,
+.close-hint {
   border: solid 1px rgb(160, 160, 160);
   position: absolute;
   top: -1px;
 }
-.draggable_div {
+
+.draggable-div {
   background-color: rgb(19, 19, 19);
   border-width: 1px;
   cursor: move;
@@ -211,100 +278,58 @@ body::-webkit-scrollbar {
   width: 161px;
   z-index: 3;
 }
-.close_hint {
+
+.close-hint {
   cursor: pointer;
   height: 40px;
   line-height: 40px;
   right: -1px;
   width: 40px;
 }
-.close_hint:hover {
+
+.close-hint:hover {
   background-color: rgb(19, 19, 19);
 }
-.hint_text {
+
+.hint-text {
   font-size: 18px;
   margin: 65px auto 10px;
 }
-.footer {
-  background-color: rgb(11, 11, 11);
-  height: 200px;
-  padding: 50px 250px;
+
+@media only screen and (max-width: 630px) {
+  .title {
+    text-align: left;
+  }
 }
-.hover_text.animate {
-  -webkit-animation: fadeIn 1s;
-  animation: fadeIn 1s;
-  display: block;
-}
-@-webkit-keyframes fadeIn {
-  from {
+
+@-webkit-keyframes lifecycle {
+  0% {
     opacity: 0;
   }
-  to {
+  35% {
     opacity: 1;
   }
-}
-@keyframes fadeIn {
-  from {
+  65% {
+    opacity: 1;
+  }
+  100% {
+    display: none;
     opacity: 0;
   }
-  to {
+}
+
+@keyframes lifecycle {
+  0% {
+    opacity: 0;
+  }
+  20% {
     opacity: 1;
   }
-}
-
-.chalbc::-webkit-scrollbar {
-  height: 8px;
-  width: 8px;
-}
-
-.chalbc::-webkit-scrollbar-track {
-  background: rgb(39, 39, 39);
-}
-
-.chalbc::-webkit-scrollbar-thumb {
-  background: #888;
-}
-
-.chalbc::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
-.game_content.center {
-  left: 50%;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.result_background {
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: none;
-  height: 100%;
-  justify-content: center;
-  left: 0;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 4;
-}
-.result {
-  background-color: rgb(19, 19, 19);
-  border: solid rgb(39, 39, 39);
-  color: white;
-  padding: 70px 70px 40px;
-  text-align: center;
-}
-.result > * {
-  margin-bottom: 30px;
-}
-.result-button {
-  background-color: rgb(19, 19, 19);
-  border: solid rgb(39, 39, 39);
-  color: white;
-  padding: 5px 10px;
-}
-.result-button:hover {
-  background-color: rgb(39, 39, 39);
-  border-radius: 4px;
+  80% {
+    opacity: 1;
+  }
+  100% {
+    display: none;
+    opacity: 0;
+  }
 }
