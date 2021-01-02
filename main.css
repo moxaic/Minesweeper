@@ -47,7 +47,8 @@ body::-webkit-scrollbar {
   padding: 5px 10px;
 }
 
-.button:hover {
+.button:hover,
+.open {
   background-color: rgb(39, 39, 39);
   border-color: rgb(39, 39, 39);
   border-radius: 4px;
@@ -191,7 +192,7 @@ body::-webkit-scrollbar {
 
 .footer {
   background-color: rgb(11, 11, 11);
-  padding: 50px 250px;
+  padding: 50px auto;
 }
 
 .modal-bg,
@@ -253,7 +254,7 @@ body::-webkit-scrollbar {
   border: 1px solid #d3d3d3;
   box-shadow: 0 0 8px 1px rgb(19, 19, 19);
   display: none;
-  left: 50vw;
+  left: 40vw;
   position: fixed;
   text-align: center;
   top: 10vh;
