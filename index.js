@@ -176,7 +176,7 @@
           (document.getElementById(i).innerText = "💣");
       }
     }
-    closeHint();
+    handleHint();
     stopIdleTime();
     clearInterval(time);
     displayResult(win);
@@ -308,15 +308,77 @@
     document.querySelector("#result").style.display = "flex";
   };
 
-  const openHint = () => {
-    checkFlags();
-    clearTimeout(idleTime);
-    document.querySelector("#hint-div").style.display = "block";
-    dragElement(document.querySelector("#hint-div"));
-  };
+  const handleHint = () => {
+    const openHint = () => {
+      const dragElement = (elem) => {
+        let pos1 = 0,
+          pos2 = 0,
+          pos3 = 0,
+          pos4 = 0;
+        const dragMouseDown = (e) => {
+          e = e || window.event;
+          e.preventDefault();
+          pos3 = e.clientX;
+          pos4 = e.clientY;
+          document.onmouseup = closeDragElement;
+          document.onmousemove = elementDrag;
+        };
+        const elementDrag = (e) => {
+          e = e || window.event;
+          e.preventDefault();
+          pos1 = pos3 - e.clientX;
+          pos2 = pos4 - e.clientY;
+          pos3 = e.clientX;
+          pos4 = e.clientY;
+          elem.style.top = elem.offsetTop - pos2 + "px";
+          elem.style.left = elem.offsetLeft - pos1 + "px";
+        };
+        const closeDragElement = () => {
+          document.onmouseup = null;
+          document.onmousemove = null;
+        };
+        document.querySelector("#movable-div").onmousedown = dragMouseDown;
+      };
 
-  const closeHint = () => {
-    document.querySelector("#hint-div").style.display = "none";
+      const moveElement = () => {
+        const touchMove = (e) => {
+          console.log(e.targetTouches);
+          let touchLocation = e.targetTouches[0];
+
+          document.querySelector(
+            "#hint-div"
+          ).style.left = `${touchLocation.pageX}px`;
+          document.querySelector(
+            "#hint-div"
+          ).style.top = `${touchLocation.pageY}px`;
+          e.stopPropagation();
+        };
+        document
+          .querySelector("#movable-div")
+          .addEventListener("touchmove", (e) => {
+            touchMove(e);
+            e.stopPropagation();
+          });
+      };
+
+      document.querySelector("#open-hint").classList.add("open");
+      checkFlags();
+      clearTimeout(idleTime);
+      document.querySelector("#hint-div").style.display = "block";
+      dragElement(document.querySelector("#hint-div"));
+      moveElement();
+    };
+
+    const closeHint = () => {
+      document.querySelector("#open-hint").classList.remove("open");
+      document.querySelector("#hint-div").style.display = "none";
+    };
+
+    if (document.querySelector("#open-hint").classList.contains("open")) {
+      closeHint();
+    } else {
+      openHint();
+    }
   };
 
   const animateDiv = () => {
@@ -325,36 +387,6 @@
       document.querySelector("#animate-div").classList.remove("animate");
       !firstClick && startIdleTime();
     }, 5000);
-  };
-
-  const dragElement = (elem) => {
-    let pos1 = 0,
-      pos2 = 0,
-      pos3 = 0,
-      pos4 = 0;
-    const dragMouseDown = (e) => {
-      e = e || window.event;
-      e.preventDefault();
-      pos3 = e.clientX;
-      pos4 = e.clientY;
-      document.onmouseup = closeDragElement;
-      document.onmousemove = elementDrag;
-    };
-    const elementDrag = (e) => {
-      e = e || window.event;
-      e.preventDefault();
-      pos1 = pos3 - e.clientX;
-      pos2 = pos4 - e.clientY;
-      pos3 = e.clientX;
-      pos4 = e.clientY;
-      elem.style.top = elem.offsetTop - pos2 + "px";
-      elem.style.left = elem.offsetLeft - pos1 + "px";
-    };
-    const closeDragElement = () => {
-      document.onmouseup = null;
-      document.onmousemove = null;
-    };
-    document.querySelector("#movable-div").onmousedown = dragMouseDown;
   };
 
   document
@@ -367,8 +399,9 @@
     handleSettings();
     createGameGrid();
   });
-  document.querySelector("#close-hint").addEventListener("click", closeHint);
-  document.querySelector("#open-hint").addEventListener("click", openHint);
+
+  document.querySelector("#close-hint").addEventListener("click", handleHint);
+  document.querySelector("#open-hint").addEventListener("click", handleHint);
   document.querySelector("#restart").addEventListener("click", () => {
     document.querySelector(".modal-bg").classList.remove("heavy-bg");
     document.querySelector(".modal-bg").style.display = "none";
