@@ -176,7 +176,9 @@
           (document.getElementById(i).innerText = "💣");
       }
     }
-    handleHint();
+    if (document.querySelector("#open-hint").classList.contains("open")) {
+      handleHint();
+    }
     stopIdleTime();
     clearInterval(time);
     displayResult(win);
@@ -310,6 +312,7 @@
 
   const handleHint = () => {
     const openHint = () => {
+      document.querySelector("#animate-div").classList.remove("animate");
       const dragElement = (elem) => {
         let pos1 = 0,
           pos2 = 0,
@@ -408,6 +411,6 @@
     document.querySelector("#result").style.display = "none";
     createGameGrid();
   });
-  window.onload = createGameGrid;
   window.onresize = handleResize;
+  createGameGrid();
 })(window, document);

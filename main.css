@@ -97,7 +97,7 @@ body::-webkit-scrollbar {
   position: absolute;
   right: 90px;
   top: 0;
-  width: 200px;
+  min-width: 200px;
   z-index: 3;
 }
 
@@ -192,7 +192,7 @@ body::-webkit-scrollbar {
 
 .footer {
   background-color: rgb(11, 11, 11);
-  padding: 50px auto;
+  padding: 50px 0;
 }
 
 .modal-bg,
