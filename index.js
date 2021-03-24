@@ -44,7 +44,7 @@
       return;
     } else {
       if (mineField[ind] === "bomb") {
-        gameOver();
+        // gameOver();
         return;
       }
       currentDiv.classList.add("checked");
@@ -392,6 +392,144 @@
     }, 5000);
   };
 
+  const possibleSafeIndex = [];
+  const clearMinesweeperAlgo = () => {
+    const firstClickedDiv = 0;
+    const neighbourBombs = document.querySelector(
+      `#${CSS.escape(firstClickedDiv)}`
+    );
+  };
+
+  const findPossibleSafeIndex = (bombCount) => {
+    switch (Number(bombCount)) {
+      case 1:
+        break;
+      case 2:
+        break;
+      case 3:
+        break;
+      case 4:
+        break;
+      case 5:
+        break;
+      case 6:
+        break;
+      case 7:
+        break;
+      case 8:
+        break;
+      default:
+        return;
+    }
+  };
+
+  const findPossibleCombination = () => {
+    const ifChecked = () => {
+      const div = document.querySelector(`#${CSS.escape(ind)}`);
+      const checked = div.classList.contains("checked");
+      return checked;
+    };
+
+    const getAllSafeCombinations = (arr) => {
+      const getCombinations = (prev, arr) => {
+        for (let i = 0; i < arr.length; i++) {
+          if ([...prev, arr[i]].length === 2) {
+            possibleCombinations.push([...prev, arr[i]]);
+          }
+          getCombinations([...prev, arr[i]], arr.slice(i + 1));
+        }
+      };
+      getCombinations([], arr);
+    };
+
+    const leftEdge = ind % cols === 0;
+    const rightEdge = ind % cols === cols - 1;
+    const uncheckedDiv = [];
+    const possibleCombinations = [];
+    if (ind > cols - 1 && !ifChecked(ind - cols)) {
+      uncheckedDiv.push(ind - cols);
+    }
+    if (!rightEdge && ind > cols - 1 && !ifChecked(ind - cols + 1)) {
+      uncheckedDiv.push(ind - cols + 1);
+    }
+    if (!rightEdge && !ifChecked(ind + 1)) {
+      uncheckedDiv.push(ind + 1);
+    }
+    if (!rightEdge && ind < cols * (rows - 1) && !ifChecked(ind + cols + 1)) {
+      uncheckedDiv.push(ind + cols + 1);
+    }
+    if (ind < cols * (rows - 1) && !ifChecked(ind + cols)) {
+      uncheckedDiv.push(ind + cols);
+    }
+    if (!leftEdge && ind < cols * (rows - 1) && !ifChecked(ind + cols - 1)) {
+      uncheckedDiv.push(ind + cols - 1);
+    }
+    if (!leftEdge && !ifChecked(ind - 1)) {
+      uncheckedDiv.push(ind - 1);
+    }
+    if (!leftEdge && ind > cols - 1 && !ifChecked(ind - cols - 1)) {
+      uncheckedDiv.push(ind - cols - 1);
+    }
+    getAllSafeCombinations(uncheckedDiv);
+    if (possibleCombinations.length === 0) {
+      console.log("bombs everywhere!!!");
+    }
+    const set = possibleCombinations.map((each) => {
+      return new Set(each);
+    });
+    console.log(set);
+    if (possibleSafeIndex.length === 0) {
+      possibleSafeIndex.push(...possibleCombinations);
+    } else {
+      getNewPossibleSafeIndexes();
+    }
+  };
+  /*
+  // 1   2   3    4
+  // -----------------
+  // |x   xx  xx   4
+  // |11  12  13  14
+
+  // combinations for x1
+  // [11, 12], [12, 2], [11, 2]
+  // combinations for 2
+  // [13, 3], [12, 3], [12, 13], [11, 3], [11, 13], [11, 12]
+  // after clicking on xx2, combinations for x1
+  // [11], [12]
+  // possible combinations that satisfy x1 & xx2
+  // [11, 13, 3], [11, 3], [11, 13], [12, 13, 3], [12, 3], [12, 13]
+  // can't have both multiplying factors in one set
+  // cant have two values from second set either --> [11, 13, 3] has [11, 13] and [13, 3] both
+  // [11, 3], [11, 13], [12, 3], [12, 13]
+  // combinations for xx3
+  // [12, 13], [12, 14], [13, 14], [12, 4], [13, 4], [14, 4]
+  // after clicking on xx3, combinations for x1 & xx2
+  // [11], [12], [12, 13], [11, 13]
+  // possible combinations that satisfy x1, xx2 & xx3
+  // [11, 13, 14], [11, 13, 4], [11, 14, 4], [12, 13], [12, 14], [12, 13, 14], [12, 4], [12, 13, 4], [12, 14, 4]
+  // has [13]      has [13]                  has [13]            has [13]               has [13]     has [12, 24]
+  // [11, 14, 4], [12, 4], [12, 14]
+  // [4], [14]
+  // 
+
+
+  */
+  const getNewPossibleSafeIndexes = () => {
+    const oldSet = new Set();
+    const newSet = new Set();
+    for (elem of possibleSafeIndex) {
+      oldSet.add(...elem);
+    }
+    for (const oldSafeIndex of possibleSafeIndex) {
+      for (const newSafeIndex of possibleSafeIndex) {
+        const set = new Set([...oldSafeIndex, ...newSafeIndex]);
+        oldSet.delete(...oldSafeIndex);
+        if (oldSet.has(set)) {
+        }
+      }
+    }
+  };
+
   document
     .querySelector("#close-settings")
     .addEventListener("click", handleSettings);
@@ -402,7 +540,6 @@
     handleSettings();
     createGameGrid();
   });
-
   document.querySelector("#close-hint").addEventListener("click", handleHint);
   document.querySelector("#open-hint").addEventListener("click", handleHint);
   document.querySelector("#restart").addEventListener("click", () => {
