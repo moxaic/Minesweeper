@@ -21,6 +21,8 @@
   const handleLeftClick = (e) => {
     handleClick();
     countBombs(Number(e.target.id));
+    // findPossibleCombination(Number(e.target.id));
+    clearMinesweeperAlgo(Number(e.target.id));
   };
 
   const handleRightClick = (e) => {
@@ -393,11 +395,10 @@
   };
 
   const possibleSafeIndex = [];
-  const clearMinesweeperAlgo = () => {
-    const firstClickedDiv = 0;
-    const neighbourBombs = document.querySelector(
-      `#${CSS.escape(firstClickedDiv)}`
-    );
+  const clearMinesweeperAlgo = (ind) => {
+    const neighbourBombs = document.querySelector(`#${CSS.escape(ind)}`)
+      .innerText;
+    console.log(neighbourBombs);
   };
 
   const findPossibleSafeIndex = (bombCount) => {
@@ -423,17 +424,19 @@
     }
   };
 
-  const findPossibleCombination = () => {
+  const findPossibleCombination = (ind) => {
+    let bombCount = 0;
     const ifChecked = () => {
       const div = document.querySelector(`#${CSS.escape(ind)}`);
       const checked = div.classList.contains("checked");
+      bombCount = div.innerText;
       return checked;
     };
 
     const getAllSafeCombinations = (arr) => {
       const getCombinations = (prev, arr) => {
         for (let i = 0; i < arr.length; i++) {
-          if ([...prev, arr[i]].length === 2) {
+          if ([...prev, arr[i]].length === 8 - bombCount) {
             possibleCombinations.push([...prev, arr[i]]);
           }
           getCombinations([...prev, arr[i]], arr.slice(i + 1));
@@ -470,6 +473,7 @@
     if (!leftEdge && ind > cols - 1 && !ifChecked(ind - cols - 1)) {
       uncheckedDiv.push(ind - cols - 1);
     }
+    console.log(uncheckedDiv);
     getAllSafeCombinations(uncheckedDiv);
     if (possibleCombinations.length === 0) {
       console.log("bombs everywhere!!!");
