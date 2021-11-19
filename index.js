@@ -1,8 +1,8 @@
 ((window, document, undefined) => {
-  let bomb = [];
-  let mineField = [];
-  let safe = [];
-  let checkedDiv,
+  let bomb = [],
+    mineField = [],
+    safe = [],
+    checkedDiv,
     cols,
     flagCount,
     firstClick = true,
@@ -208,6 +208,7 @@
       mine.addEventListener("click", handleLeftClick);
       mine.addEventListener("contextmenu", handleRightClick);
     }
+
     firstClick = true;
     handleResize();
     document.querySelector("#time").innerText = "00:00";
@@ -233,6 +234,7 @@
       }
       return time;
     };
+
     const stopWatch = () => {
       sec++;
       if (sec === 60) {
@@ -248,6 +250,7 @@
       const currTime = formatTime();
       document.querySelector("#time").innerText = currTime;
     };
+
     let min = 0,
       sec = 0;
     time = setInterval(stopWatch, 1000);
