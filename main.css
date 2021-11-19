@@ -75,7 +75,6 @@ body::-webkit-scrollbar {
 .game-info {
   align-items: center;
   display: flex;
-  flex: content;
   justify-content: space-between;
   margin-bottom: 20px;
   position: relative;
